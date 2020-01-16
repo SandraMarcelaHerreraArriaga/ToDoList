@@ -1,9 +1,12 @@
-import { ADD_TODO } from "../actionTypes"
+import { ADD_TODO, DELETE_TODO } from "../actionTypes"
 
-const todos = state = (state = [], action) => {
+const todos =  (state = [], action) => {
     switch(action.type){
         case ADD_TODO:
-            break
+            return [...state,action.payload]
+        case DELETE_TODO:
+            state.splice(action.payload,1)
+            return [...state] //todos.splice(idx,1)
         default:
             return state
     }

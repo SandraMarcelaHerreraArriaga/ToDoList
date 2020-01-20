@@ -1,33 +1,24 @@
-import React, { useState, useEffect, useDebugValue } from 'react'
+import React, { useState, useEffect} from 'react'
 import TodoElement from './TodoElement'
 import { useSelector, useDispatch } from 'react-redux'
 import actions from './../Redux/actions'
 
 function TodoList(){
 const dispatch = useDispatch()
-const todos = useSelector(state => state.todos) //este es de redux
+const loading = useSelector(state => state.todos.loading) //
+const todos = useSelector(state => state.todos.todos) //este es de redux
 
 
 const [newTodo, setNewTodo] = useState('')
 
 
 useEffect(() => {
-    console.log("useEffect")
-},[todos])
+    dispatch(actions.todos.getTodos())
+},[dispatch])
 
 function addToDo(){
     console.log("add Todo")
     dispatch(actions.todos.addTodo(newTodo))
-    
-    //Esto es equivalente a la linea de arriba
-    //dispatch({
-      //  type: 'ADD_TODO',
-        //payload: newTodo
-    //})
-
-    //setTodos([...todos,newTodo])
-    setNewTodo('')
-    console.log(todos)
 }
 
 function handleOnChange(e){
@@ -39,8 +30,10 @@ function handleOnChange(e){
         <h1>Todo List</h1>
         <input type="text" value = {newTodo} onChange={handleOnChange}></input>
         <button onClick={addToDo}>add</button>
+        {loading ? <p>loading...</p> : null}
+        {console.log(todos)}
         {todos.map((todo,idx) => {
-            return <TodoElement content= {todo} idx = {idx} key={idx}></TodoElement>
+            return <TodoElement todo = {todo} key = {todo._id}></TodoElement>
         })}
         
     </div>

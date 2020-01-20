@@ -11,7 +11,7 @@ function handleDeleteClick(){
 
     dispatch(actions.todos.deleteTodo(props.idx))
 }
-return <p>{props.content} <button onClick={handleDeleteClick}>delete</button></p>
+return <p>{props.todo.content} <button onClick={handleDeleteClick}>delete</button></p>
 }
 
 export default TodoElement
